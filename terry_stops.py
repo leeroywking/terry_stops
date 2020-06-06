@@ -1,6 +1,7 @@
 import json
 import math
 import sys
+from typing import Tuple
 assert sys.version_info >= (3, 8)
 
 with open('./terry_stops.json') as f:
@@ -12,7 +13,10 @@ for item in columns:
     column_titles.append(item["name"])
 # print(column_titles)
 
-def build_results(col1:int, col2:int, col3: int):
+def build_results(col1:int, col2:int, col3: int) -> dict:
+    """
+    Builds a dictionary which forms the basis of future answers
+    """
     outcomes_by_officer_race_and_suspect_race = {}
     for report in data["data"]:
         officer_race = report[col1]
@@ -36,15 +40,21 @@ def build_results(col1:int, col2:int, col3: int):
         out[officer_race][suspect_race]["Total"] +=1
     return outcomes_by_officer_race_and_suspect_race
 
-def get_races():
+def get_races() -> Tuple[set,set]:
+    """
+    Returns a pair of sets of officer_races and suspect_races
+    """
     officer_races = set()
     suspect_races = set()
     for entry in data["data"]:
         officer_races.add(entry[17])
         suspect_races.add(entry[18])
-    return list(officer_races), (suspect_races)
+    return officer_races, suspect_races
 
 def print_results(officer_race: str, suspect_race: str):
+    """
+    This calls build_results() and then prints the results
+    """
     outcomes_by_officer_race_and_suspect_race = build_results(17,18,12)
     print(f"Outcomes for {suspect_race} suspects with {officer_race} officer")
     for outcome in outcomes_by_officer_race_and_suspect_race[officer_race][suspect_race]:
@@ -53,7 +63,6 @@ def print_results(officer_race: str, suspect_race: str):
     print("n= ", outcomes_by_officer_race_and_suspect_race[officer_race][suspect_race]["Total"])
     print("")
 
-# print(len(data["data"]))
 while True:
     officer_races, suspect_races = get_races()
     officer_race = input("Officer race:")
@@ -68,4 +77,4 @@ while True:
         suspect_race = input("Suspect race: ")
     print("")
     print_results(officer_race, suspect_race)
-
+    exit(0)
