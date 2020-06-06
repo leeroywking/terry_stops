@@ -1,5 +1,5 @@
 ## SPD terry stop CLI explorer
-This tool is a simple way to see the output of some fairly static queries against seattle police terry stops. Currently the data is organizes such that it will output as follows
+This tool is a simple way to see the output of some fairly static queries against seattle police terry stops. Currently the data is organized such that it will output as follows
 
 
 ```bash
