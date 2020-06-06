@@ -17,7 +17,7 @@ for item in columns:
 # print(column_titles)
 
 
-def check_and_create_field(
+def check_or_create_field(
     out: dict, officer_race: str, suspect_race: str, outcome: str
 ) -> None:
     try:
@@ -44,7 +44,7 @@ def build_outcomes(col1: int, col2: int, col3: int) -> dict:
         suspect_race = report[col2]
         outcome = report[col3]
         out = outcomes_by_officer_race_and_suspect_race
-        check_and_create_field(out, officer_race, suspect_race, outcome)
+        check_or_create_field(out, officer_race, suspect_race, outcome)
         out[officer_race][suspect_race][outcome] += 1
         out[officer_race][suspect_race]["Total"] += 1
     return outcomes_by_officer_race_and_suspect_race
