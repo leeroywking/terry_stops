@@ -65,7 +65,7 @@ def get_races() -> Tuple[set, set]:
 
 def print_results(officer_race: str, suspect_race: str) -> None:
     """
-    This calls build_results() and then prints the results
+    This calls build_outcomes() and then prints the results
     """
     outcomes_by_officer_race_and_suspect_race = build_outcomes(17, 18, 12)
     print(f"Outcomes for {suspect_race} suspects with {officer_race} officer")
@@ -82,6 +82,9 @@ def print_results(officer_race: str, suspect_race: str) -> None:
 
 
 def valid_entry(prompt: str, possible_entries: set) -> str:
+    """
+    Validates potential entry and only returns a valid entry
+    """
     entry = input(prompt)
     while entry not in possible_entries:
         print(f"please enter an option from the following list")
@@ -91,6 +94,9 @@ def valid_entry(prompt: str, possible_entries: set) -> str:
 
 
 def run_again():
+    """
+    user initiated run again
+    """
     continue_yn = input("Run an additional Query?").lower()
     if continue_yn in ["y", "yes"]:
         main()
@@ -99,6 +105,9 @@ def run_again():
 
 
 def main() -> None:
+    """
+    Main function for whole program
+    """
     officer_races, suspect_races = get_races()
     officer_race = valid_entry("Officer race: ", officer_races)
     suspect_race = valid_entry("Suspect race: ", suspect_races)
@@ -108,6 +117,9 @@ def main() -> None:
 
 
 def exit_prog():
+    """
+    clean exit
+    """
     print(
         """
         Thank you for using this program written by Lee-Roy King
