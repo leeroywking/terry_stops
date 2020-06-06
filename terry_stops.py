@@ -5,8 +5,11 @@ from typing import Tuple
 
 assert sys.version_info >= (3, 8)
 
-# data obtained from https://www.seattle.gov/police/information-and-data/terry-stops
+# data obtained from
+# https://www.seattle.gov/police/information-and-data/terry-stops
+# and
 # https://data.seattle.gov/Public-Safety/Terry-Stops/28ny-9ts8/data
+
 with open("./terry_stops.json") as f:
     data = json.load(f)
 
@@ -22,15 +25,15 @@ def check_or_create_field(
 ) -> None:
     try:
         out[officer_race]
-    except:
+    except KeyError:
         out[officer_race] = {}
     try:
         out[officer_race][suspect_race]
-    except:
+    except KeyError:
         out[officer_race][suspect_race] = {"Total": 0}
     try:
         out[officer_race][suspect_race][outcome]
-    except:
+    except KeyError:
         out[officer_race][suspect_race][outcome] = 0
 
 
@@ -40,9 +43,7 @@ def build_outcomes(col1: int, col2: int, col3: int) -> dict:
     """
     outcomes_by_officer_race_and_suspect_race = {}
     for report in data["data"]:
-        officer_race = report[col1]
-        suspect_race = report[col2]
-        outcome = report[col3]
+        officer_race, suspect_race, outcome = report[col1], report[col2], report[col3]
         out = outcomes_by_officer_race_and_suspect_race
         check_or_create_field(out, officer_race, suspect_race, outcome)
         out[officer_race][suspect_race][outcome] += 1
